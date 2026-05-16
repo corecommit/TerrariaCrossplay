@@ -24,7 +24,7 @@ namespace Crossplay
             int playerId = -1;
             for (int i = 0; i < Main.maxPlayers; i++)
             {
-                if (Netplay.Clients[i].Socket == args.socket)
+                if (Netplay.Clients[i]?.Socket == args.socket)
                 {
                     playerId = i;
                     break;
@@ -35,6 +35,7 @@ namespace Crossplay
             {
                 return;
             }
+
 
             if (InvalidNetPacket(args.packet, playerId))
             {

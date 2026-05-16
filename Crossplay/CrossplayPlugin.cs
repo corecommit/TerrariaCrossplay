@@ -166,6 +166,7 @@ namespace Crossplay
 
                             if (!int.TryParse(digits, out int versionNumber))
                             {
+                                Log($"Could not parse version number from client string: '{clientVersion}' (index {args.Msg.whoAmI})", color: ConsoleColor.Yellow);
                                 return;
                             }
                             if (versionNumber == Main.curRelease)
@@ -175,6 +176,7 @@ namespace Crossplay
                             }
                             if (!_supportedVersions.ContainsKey(versionNumber))
                             {
+                                Log($"Unsupported client version {versionNumber} (raw: '{clientVersion}') from index {args.Msg.whoAmI} — add it to _supportedVersions if this is a valid mobile version", color: ConsoleColor.Yellow);
                                 return;
                             }
                             ClientVersions[index] = versionNumber;
@@ -183,7 +185,12 @@ namespace Crossplay
                                 .SetType(1)
                                 .PackString($"Terraria{Main.curRelease}")
                                 .GetByteData();
-                            Log($"Changing version of index {args.Msg.whoAmI} from {_supportedVersions[versionNumber]} => {_supportedVersions[Main.curRelease]}", color: ConsoleColor.Green);
+
+                            string fromVersion = _supportedVersions[versionNumber];
+                            string toVersion = _supportedVersions.TryGetValue(Main.curRelease, out string serverVersionName)
+                                ? serverVersionName
+                                : $"v{Main.versionNumber} (build {Main.curRelease})";
+                            Log($"Changing version of index {args.Msg.whoAmI} from {fromVersion} => {toVersion}", color: ConsoleColor.Green);
 
                             Buffer.BlockCopy(connectRequest, 0, args.Msg.readBuffer, args.Index - 3, connectRequest.Length);
                         }
