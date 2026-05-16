@@ -65,9 +65,9 @@ namespace Crossplay
 
         public override void Initialize()
         {
-            if (!_supportedVersions.TryGetValue(Main.curRelease, out string version) || version != Main.versionNumber)
+            if (!_supportedVersions.TryGetValue(Main.curRelease, out string version) || version.TrimStart('v') != Main.versionNumber.TrimStart('v'))
             {
-                throw new NotSupportedException("The provided version of this plugin is outdated and will not function properly. Check for any updates here: https://github.com/Nayetdet/TerrariaCrossplay");
+                throw new NotSupportedException("The provided version of this plugin is outdated...");
             }
 
             ServerApi.Hooks.NetSendNetData.Register(this, NetModuleHandler.OnSendNetData);
