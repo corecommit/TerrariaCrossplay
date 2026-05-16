@@ -19,6 +19,7 @@ namespace Crossplay
     {
         private readonly Dictionary<int, string> _supportedVersions = new()
         {
+            { 279, "v1.4.4.9" },
             { 313, "v1.4.5.0" },
             { 314, "v1.4.5.1" },
             { 315, "v1.4.5.2" },
@@ -46,6 +47,7 @@ namespace Crossplay
 
         public readonly Dictionary<int, int> MaxItems = new()
         {
+            { 279, 5045 },
             { 313, 6145 },
             { 314, 6145 },
             { 315, 6145 },
